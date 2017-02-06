@@ -20,8 +20,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.LifecycleManager;
-import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.windows.TopComponent;
@@ -40,9 +38,8 @@ import org.openide.util.lookup.AbstractLookup;
         //iconBase="SET/PATH/TO/ICON/HERE", 
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
-@TopComponent.Registration(mode = "explorer", openAtStartup = true)
-@ActionID(category = "Window", id = "com.asgteach.familytree.personfxviewer.PersonFXViewerTopComponent")
-@ActionReference(path = "Menu/Window" /*, position = 333 */)
+@TopComponent.Registration(roles="Admin" ,mode = "explorer", openAtStartup = true)
+
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_PersonFXViewerAction",
         preferredID = "PersonFXViewerTopComponent"

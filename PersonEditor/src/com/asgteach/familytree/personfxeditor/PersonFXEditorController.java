@@ -178,7 +178,7 @@ public class PersonFXEditorController implements Initializable {
     @FXML
     private void updateButtonAction(ActionEvent event) {
            enableUpdateProperty.set(false);
-        ftm.updatePerson(thePerson);
+           ftm.updatePerson(thePerson);
     }
      
 }

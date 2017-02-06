@@ -19,8 +19,6 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.netbeans.api.settings.ConvertAsProperties;
-import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
@@ -42,9 +40,8 @@ import org.openide.util.Utilities;
         //iconBase="SET/PATH/TO/ICON/HERE", 
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
-@TopComponent.Registration(mode = "editor", openAtStartup = true)
-@ActionID(category = "Window", id = "com.asgteach.familytree.personfxeditor.PersonFXEditorTopComponent")
-@ActionReference(path = "Menu/Window" /*, position = 333 */)
+@TopComponent.Registration(roles="Admin",mode = "editor", openAtStartup = true)
+
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_PersonFXEditorAction",
         preferredID = "PersonFXEditorTopComponent"
