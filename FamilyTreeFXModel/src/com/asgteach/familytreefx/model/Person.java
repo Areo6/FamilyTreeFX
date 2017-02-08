@@ -20,7 +20,7 @@ import javafx.beans.property.StringProperty;
  * @author Developer
  */
 public class Person {
-    private final long id;
+    final long id;
     private final StringProperty firstname =
             new SimpleStringProperty(this, "firstname", "");
     private final StringProperty middlename =
