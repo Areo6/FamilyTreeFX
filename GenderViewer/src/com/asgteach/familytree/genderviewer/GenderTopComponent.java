@@ -13,6 +13,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.LifecycleManager;
 import org.openide.awt.ActionID;
@@ -24,6 +25,8 @@ import org.openide.util.Lookup;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.lookup.InstanceContent;
+import javax.swing.ActionMap;
+
 
 
 
@@ -69,9 +72,12 @@ public final class GenderTopComponent extends TopComponent implements ExplorerMa
 
         BeanTreeView view = new BeanTreeView();
         add(view, BorderLayout.CENTER);
+        ActionMap map = getActionMap();
+        map.put("delete", ExplorerUtils.actionDelete(em, true));
         associateLookup(ExplorerUtils.createLookup(em, this.getActionMap()));
         
         em.setRootContext(new RootNode());
+        
     }
 
     /**
