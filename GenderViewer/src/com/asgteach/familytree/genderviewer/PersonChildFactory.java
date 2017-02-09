@@ -5,10 +5,12 @@
  */
 package com.asgteach.familytree.genderviewer;
 
+import com.asgteach.familytree.capabilities.RefreshCapability;
 import com.asgteach.familytreefx.model.FamilyTreeManagerSwing;
 import com.asgteach.familytreefx.model.PersonSwing;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,32 +26,36 @@ import org.openide.util.WeakListeners;
  */
 public class PersonChildFactory extends ChildFactory<PersonSwing>{
 
-     private final FamilyTreeManagerSwing ftm;
-    private static final Logger logger = Logger.getLogger(PersonChildFactory.class.getName());
-    private final PersonSwing.Gender gender;
-
-    public PersonChildFactory(PersonSwing.Gender gender) {
-        this.gender=gender;
-        this.ftm = Lookup.getDefault().lookup(FamilyTreeManagerSwing.class);
+     private static final Logger logger = Logger.getLogger(
+                     PersonChildFactory.class.getName());
+    private final PersonCapability personCapability = new PersonCapability();
+    private FamilyTreeManagerSwing ftm = null;
+    public PersonChildFactory() {
+        ftm = Lookup.getDefault().lookup(FamilyTreeManagerSwing.class);
         if (ftm == null) {
             logger.log(Level.SEVERE, "Cannot get FamilyTreeManager object");
             LifecycleManager.getDefault().exit();
+        } else {
+            ftm.addPropertyChangeListener(
+                  WeakListeners.propertyChange(familyTreeListener, ftm));
         }
-        ftm.addPropertyChangeListener(familyTreeListener);
     }
 
 
     @Override
     protected boolean createKeys(List<PersonSwing> list) {
-        ftm.getAllPeople().stream().forEach((PersonSwing p) -> {
-            if (p.getGender().equals(gender)) {
-                list.add(p);
+         RefreshCapability refreshCapability =
+               personCapability.getLookup().lookup(RefreshCapability.class);
+        if (refreshCapability != null) {
+            try {
+                refreshCapability.refresh();
+                list.addAll(personCapability.getPersonList());
+                logger.log(Level.FINER, "createKeys called: {0}", list);
+            } catch (IOException ex) {
+                logger.log(Level.WARNING, null, ex);
             }
-        });
-        
-        logger.log(Level.FINER, "createKeys called: {0}", ftm.getAllPeople());
+        }
         return true;
-
     }
 
     @Override
@@ -61,11 +67,9 @@ public class PersonChildFactory extends ChildFactory<PersonSwing>{
  //To change body of generated methods, choose Tools | Templates.
     }
      private final PropertyChangeListener familyTreeListener = (PropertyChangeEvent evt) -> {
-        if (evt.getPropertyName().equals(FamilyTreeManagerSwing.PROP_PERSON_UPDATED)
-                && evt.getNewValue() != null) {
-            PersonSwing personChange = (PersonSwing) evt.getNewValue();
-            logger.log(Level.INFO, "Person updated: {0}", personChange);
-            this.refresh(true);   
+        if (evt.getPropertyName().equals(FamilyTreeManagerSwing.PROP_PERSON_ADDED)|| evt.getPropertyName().equals(
+            FamilyTreeManagerSwing.PROP_PERSON_DESTROYED)) {
+            this.refresh(true);
         }
     };
 
