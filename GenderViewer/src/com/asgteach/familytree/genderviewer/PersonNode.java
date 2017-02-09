@@ -6,11 +6,15 @@
 package com.asgteach.familytree.genderviewer;
 
 import com.asgteach.familytreefx.model.PersonSwing;
+import com.asgteach.familytreefx.model.PersonSwing.Gender;
+import java.awt.datatransfer.Transferable;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.util.NbBundle;
+import org.openide.util.datatransfer.ExTransferable;
 import org.openide.util.lookup.Lookups;
 
 
@@ -59,5 +63,29 @@ public class PersonNode extends AbstractNode implements PropertyChangeListener {
         fireDisplayNameChange(null, getDisplayName());
 
     }
+
+    @Override
+    public boolean canCut() {
+         return true; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean canCopy() {
+        return true; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean canRename() {
+        return super.canRename(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+
+    @Override
+    public boolean canDestroy() {
+        return true; //To change body of generated methods, choose Tools | Templates.
+    }
+     
     
 }

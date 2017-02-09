@@ -22,7 +22,7 @@ import org.openide.util.lookup.Lookups;
 public class GenderNode extends AbstractNode {
     
     public GenderNode(Gender gender) {
-        super(Children.create(new PersonChildFactory(gender), false),
+        super(Children.create(new PersonChildFactory(), false),
                                                 Lookups.singleton(gender));
         setGenderStuff(gender);
         setShortDescription(Bundle.HINT_GenderNode());

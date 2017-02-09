@@ -5,7 +5,24 @@
         <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
             <code-name-base>com.asgteach.familytree.capabilities</code-name-base>
             <suite-component/>
-            <module-dependencies/>
+            <module-dependencies>
+                <dependency>
+                    <code-name-base>com.asgteach.familytreefx.model</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>1.0</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
+                    <code-name-base>org.openide.util</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>9.5.1</specification-version>
+                    </run-dependency>
+                </dependency>
+            </module-dependencies>
             <public-packages>
                 <package>com.asgteach.familytree.capabilities</package>
             </public-packages>
